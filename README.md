@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # actividad2-Atacando-formasegura
 
 This template should help get you started developing with Vue 3 in Vite.
@@ -37,3 +38,6 @@ npm run build
 ```sh
 npm run lint
 ```
+=======
+# Atacando-formasegura
+>>>>>>> 20d597d4aca09700bccc5193ecb2c6f4a83eddfd
