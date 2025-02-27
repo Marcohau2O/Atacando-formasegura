@@ -18,42 +18,18 @@
       </nav>
     </aside>
 
-    <!-- Main content -->
-    <main class="flex-1 p-10">
-      <header class="bg-white shadow rounded-lg p-5 mb-10">
-        <h1 class="text-3xl font-bold">Welcome, {{ authStore.user?.name }}</h1>
-      </header>
-
-      <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="bg-white p-6 rounded-lg shadow">
-          <h2 class="text-xl font-semibold">Total Users</h2>
-          <p class="text-3xl mt-4">1,234</p>
-        </div>
-
-        <div class="bg-white p-6 rounded-lg shadow">
-          <h2 class="text-xl font-semibold">Revenue</h2>
-          <p class="text-3xl mt-4">$56,789</p>
-        </div>
-
-        <div class="bg-white p-6 rounded-lg shadow">
-          <h2 class="text-xl font-semibold">New Orders</h2>
-          <p class="text-3xl mt-4">312</p>
-        </div>
-      </section>
-    </main>
-  </div>
 </template>
-  
-  <script setup>
-  import { useAuthStore } from '@/stores/authStore';
-  import { useRouter } from 'vue-router';
-  
-  const authStore = useAuthStore();
-  const router = useRouter();
-  
-  const logout = () => {
-    authStore.logout();
-    localStorage.removeItem('token')
-    router.push('/login');
-  };
-  </script>
+
+<script setup>
+import { useAuthStore } from '@/stores/authStore';
+import { useRouter } from 'vue-router';
+
+const authStore = useAuthStore();
+const router = useRouter();
+
+const logout = () => {
+  authStore.logout();
+  localStorage.removeItem('token')
+  router.push('/login');
+};
+</script>

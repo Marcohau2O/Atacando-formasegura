@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center justify-center min-h-screen bg-gradient-to-r from-gray-700 to-gray-900">
+  <div class="flex items-center justify-center min-h-screen bg-gradient-to-r">
     <div class="w-full max-w-md p-8 space-y-6 bg-white rounded-2xl shadow-lg">
       <h2 class="text-3xl font-extrabold text-center text-gray-800">Registrarse</h2>
 
