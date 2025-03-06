@@ -11,9 +11,11 @@ export const genericRequest = async (url: string, method: string, body?: any) =>
       },
       data: body,
     })
+    console.log('Response', response)
     return response.data
   } catch (error: any) {
-    
+    console.error('Error:', error.response ? error.response.data : error.message);
+    throw error;
   }
 }
 

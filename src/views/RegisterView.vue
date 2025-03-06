@@ -3,12 +3,12 @@
     <div class="w-full max-w-md p-8 space-y-6 bg-white rounded-2xl shadow-lg">
       <h2 class="text-3xl font-extrabold text-center text-gray-800">Registrarse</h2>
 
-      <form @submit.prevent="register" novalidate>
-        <div class="mb-4">
+      <form @submit.prevent="register">
+        <!-- <div class="mb-4">
           <label class="block text-sm font-medium text-gray-700 mb-1">Name</label>
           <input v-model="name" type="text" placeholder="Enter your username" required
             class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
-        </div>
+        </div> -->
 
         <div class="mb-4">
           <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
@@ -42,30 +42,33 @@
 </template>
 
 <script setup>
-import router from '@/router';
+import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/authStore';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 
-const name = ref('')
+// const name = ref('')
 const email = ref('')
 const password = ref()
 const confirmPassword = ref()
 const errorMessage = ref('')
 
 const authStore = useAuthStore()
+const router = useRouter()
+
+const isValidFields = computed(() => {
+  return (
+    email.value.trim() !== '' && password.value.trim() !== '' && confirmPassword.value.trim() !== ''
+  )
+})
+
+const isValidPassword = computed(() => {
+  return password.value.trim().length >= 6 && password.value === confirmPassword.value
+})
 
 const register = async () => {
-  try {
-    await authStore.register(name.value, email.value, password.value, confirmPassword.value)
-    if (authStore.isLoggedIn) {
-      console.log('register successful')
-      router.push('/dashboard')
-    } else {
-      errorMessage.value = 'Invalid credentials'
-    }
-  } catch (error) {
-    errorMessage.value = 'Register failed'
-    console.error(error)
+  if (isValidFields.value && isValidPassword.value) {
+    authStore.register(email.value, password.value).then(() => {
+    })
   }
-};
+}
 </script>

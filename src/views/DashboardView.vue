@@ -18,18 +18,29 @@
       </nav>
     </aside>
 
+    <Ataque/>
+  </div>
+
+
 </template>
 
-<script setup>
+<script setup lang="ts">
+import Ataque from '@/components/Attacks/XSSComponent.vue'
 import { useAuthStore } from '@/stores/authStore';
-import { useRouter } from 'vue-router';
 
 const authStore = useAuthStore();
-const router = useRouter();
 
-const logout = () => {
-  authStore.logout();
-  localStorage.removeItem('token')
-  router.push('/login');
+const logout = async () => {
+  try {
+    const response = await authStore.logout();
+    if (response.status === 200 && response.data.deleted === 1) {
+      authStore.setToken(''); // Limpia el token
+      localStorage.removeItem('token');
+    } else {
+      console.error('Logout failed:', response.data.error || 'Token was not invalidated.');
+    }
+  } catch (error) {
+    console.log("Error al cerrar sesión", error.message || error);
+  }
 };
 </script>

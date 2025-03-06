@@ -1,6 +1,6 @@
 import { genericRequest, genericRequestAutheticated } from '../utils/api';
 
-const base_url = import.meta.env.VITE_ENDPOINT_API ?? 'https://localhost:7004/api'
+const base_url = import.meta.env.VITE_ENDPOINT_API ?? 'http://localhost:3000'
 
 const headers = {
   'Content-Type': 'application/json',
@@ -25,21 +25,18 @@ const handleError = async (error: any, context: string) => {
 
 }
 
-export const LoginService = async (name: string, password: string) => {
+export const LoginService = async (email: string, password: string) => {
     try {
-      const response = await genericRequest(base_url + '/User/login', 'POST', { name, password });
-  
-      console.log('API Response:', response);
-      return response;
+      return await genericRequest(base_url + '/users/login', 'POST', { email, password })
     } catch (error) {
-      await handleError(error, 'login');
+      await handleError(error, 'login')
       throw error;
     }
-  };
+  }
 
 export const RegisterService = async (email: string, password: string) => {
   try {
-    return await genericRequest(base_url + '/User/register', 'POST', { email, password })
+    return await genericRequest(base_url + '/users/register', 'POST', { email, password })
   } catch (error) {
     await handleError(error, 'registration')
     throw error;
@@ -48,11 +45,8 @@ export const RegisterService = async (email: string, password: string) => {
 
 export const LogoutService = async () => {
   try {
-
-    const token = localStorage.getItem('token');
-    const headers = { Authorization: `Bearer ${token}` };
-
-    await genericRequestAutheticated(headers, base_url + '/User/logout', 'POST')
+    const response = await genericRequestAutheticated(headers, base_url + '/users/logout', 'POST')
+    return response;
   } catch (error) {
     await handleError(error, 'logout')
     throw error;
